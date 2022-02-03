@@ -1,14 +1,38 @@
 <template>
-    <div>
-        Ид поста: {{$route.params.id}}
-    </div>
+  <div>
+    PostForm {{ $route.params.id }}
+    <my-input v-model="postText" label="Текст поста" />
+    <my-input v-model="postBody" label="Тело поста" />
+    <button @click="onUpdate">Обновить</button>
+  </div>
 </template>
 
 <script>
-
 export default {
-    data () {
-     
+  data() {
+    return {
+      postText: "",
+      postBody: "",
+      postId: '',
+    };
+  },
+  created() {
+    const id = this.$route.params.id;
+    const postById = this.$store.getters["posts/postById"];
+    const editPost = postById(id);
+    this.postId = editPost?.id;
+    this.postText = editPost?.title;
+    this.postBody = editPost?.body;
+  },
+  methods: {
+    onUpdate() {
+      this.$store.dispatch("posts/updatePost", {
+        id: this.postId,
+        title: this.postText,
+        body: this.postBody,
+      });
+      this.$router.push("/posts");
     },
-}
+  },
+};
 </script>

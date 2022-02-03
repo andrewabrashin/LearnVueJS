@@ -4,7 +4,6 @@
     <my-input v-model="postText" label="Текст поста" />
     <my-input v-model="postBody" label="Тело поста" />
     <button @click="onAdd">Добавть</button>
-    <button @click="onUpdate">Обновить</button>
   </div>
 </template>
 

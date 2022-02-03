@@ -8,7 +8,7 @@ export default {
     newsPosts(state) {
         return state.posts.filter(post => post.type === 'news');
     },  
-    lessonsByCourseId (state) {
-        return (id) => state.lessons.filter(lesson => lesson.courseId === id);
+    postById (state) {
+        return (id) => state.posts.find(item => item.id === id);
     }
 }

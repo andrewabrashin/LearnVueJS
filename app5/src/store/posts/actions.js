@@ -18,25 +18,13 @@ export default {
 
     createPost(context, data) {
         data.id = generateUUID();
-        const postsObject = {};
-        for (let element of context.state.posts) {
-            postsObject[element.id] = {};
-            for (const [key, value] of Object.entries(element)) {
-                postsObject[element.id][key] = value;
-            }
-        }
-        // console.log(postsObject);
-
-
         const db = getDatabase();
-        set(ref(db, 'posts/123'), data);
-        // set(ref(db, 'posts'), postsObject);
+        set(ref(db, 'posts/'+data.id), data);
     },
 
     updatePost(context, data) {
         const updates = {};
         updates['/posts/' + data.id] = data;
-
         const db = getDatabase();
         return update(ref(db), updates);
     },
@@ -44,7 +32,6 @@ export default {
     deletePost(context, id) {
         const updates = {};
         updates['/posts/' + id] = null;
-
         const db = getDatabase();
         return update(ref(db), updates);
     }
