@@ -20,6 +20,7 @@ const firebaseConfig = {
   databaseURL: "https://learnvuejsapp-default-rtdb.asia-southeast1.firebasedatabase.app/",
   projectId: "learnvuejsapp",
   storageBucket: "learnvuejsapp.appspot.com",
+  
   messagingSenderId: "271718158509",
   appId: "1:271718158509:web:45fa9958b2a2562c1ff624",
   measurementId: "G-F8FJQVC5KW"
@@ -31,15 +32,14 @@ initializeApp(firebaseConfig);
 const db = getDatabase();
 const auth = getAuth();
 
-onValue(ref(db, '/posts'), (snapshot) => {
-  store.commit('posts/clear',);
+const path = '/posts';
+onValue(ref(db, path), (snapshot) => {
+  store.commit('posts/clear');
   const postsObject = snapshot.val();
-  console.log(postsObject);
   for (const [key, value] of Object.entries(postsObject)) {
     store.commit('posts/addPost', value);
-}
+  }
 });
-
 
 onAuthStateChanged(auth, (user) => {
   if (user) {
